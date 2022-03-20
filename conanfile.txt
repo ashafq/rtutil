@@ -1,0 +1,12 @@
+[requires]
+libsndfile/1.0.31
+tabulate/1.4
+cxxopts/3.0.0
+libsamplerate/0.2.2
+
+[generators]
+cmake_find_package
+
+[imports]
+bin, *.dll -> ./bin # Copies all dll files from packages bin folder to my "bin" folder
+lib, *.dylib* -> ./bin # Copies all dylib files from packages lib folder to my "bin" folder
