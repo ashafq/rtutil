@@ -27,7 +27,7 @@
 #include <condition_variable>
 #include <filesystem>
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <mutex>
 #include <span>
 #include <string>
@@ -129,7 +129,7 @@ static int get_format_from_file_ext(std::string filename) {
   };
 
   namespace fs = std::filesystem;
-  auto ext = fs::path(filename).extension();
+  auto ext = fs::path(filename).extension().string();
 
   if (fmt.count(ext)) {
     return fmt.at(ext);

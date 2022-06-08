@@ -9,5 +9,5 @@ add_executable (${RTUTIL_EXE}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cc)
 target_include_directories (${RTUTIL_EXE} PRIVATE
     ${PROJECT_INCLUDE_DIRS})
-target_link_libraries (${RTUTIL_EXE}
+target_link_libraries (${RTUTIL_EXE} PRIVATE
     ${PROJECT_LIBRARIES})

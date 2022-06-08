@@ -46,9 +46,22 @@ find_package (cxxopts REQUIRED)
 find_package (tabulate REQUIRED)
 find_package (SndFile REQUIRED)
 
-# There are no conan package of rtaudio
-find_package (PkgConfig)
-pkg_check_modules (RTAUDIO REQUIRED rtaudio)
+# There are no conan package of rtaudio, so need to fetch
+if (WIN32)
+  include(FetchContent)
+  FetchContent_Declare (
+      rtaudio
+      GIT_REPOSITORY https://github.com/thestk/rtaudio.git
+      GIT_TAG        46b01b5b134f33d8ddc3dab76829d4b1350e0522 # release-5.2.0
+      )
+  FetchContent_MakeAvailable (rtaudio)
+  set (RTAUDIO_INCLUDE_DIRS ${rtaudio_SOURCE_DIRS})
+  set (RTAUDIO_LIBRARIES rtaudio)
+  set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:CONSOLE")
+else ()
+  find_package (PkgConfig)
+  pkg_check_modules (RTAUDIO REQUIRED rtaudio)
+endif ()
 
 set (PROJECT_INCLUDE_DIRS
     ${CMAKE_SOURCE_DIR}/include

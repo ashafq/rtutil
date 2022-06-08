@@ -26,6 +26,10 @@
 #include <limits>
 #include <vector>
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
+
 constexpr bool is_pow2(std::size_t z) {
   if (z > 0) {
     return ((z & (z - 1U)) == 0);
@@ -43,11 +47,12 @@ constexpr std::size_t next_pow2(std::size_t z) {
 #if __cplusplus >= 202002L
     constexpr auto n_bits = std::numeric_limits<std::size_t>::digits;
     std::size_t lg2 = (n_bits - 1U) - std::countl_zero(z);
-#else
-    // TODO replace __builtin_clz with something more portable
+#elif defined (__GNUC__)
     std::size_t lg2 = 31U - __builtin_clz(z);
+#elif defined (_MSC_VER)
+     std::size_t lg2 = std::size_t(31U) - __lzcnt64(z);
 #endif
-    return 1U << (lg2 + 1);
+    return std::size_t(1U) << (lg2 + 1);
   }
 }
 
