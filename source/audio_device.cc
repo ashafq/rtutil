@@ -105,7 +105,7 @@ void list_audio_device(RtAudio::Api api) {
     .border_right("┋")
     .corner("◦");
 
-  for (size_t dev = 0; dev < audio.getDeviceCount(); ++dev) {
+  for (unsigned int dev = 0; dev < audio.getDeviceCount(); ++dev) {
     auto info = audio.getDeviceInfo(dev);
 
     if (info.probed) {
